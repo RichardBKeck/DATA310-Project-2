@@ -86,10 +86,12 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
   ![image](https://user-images.githubusercontent.com/109169036/179863658-a755c265-5330-4fc9-8ad3-2ff2c09ade09.png)
   ![image](https://user-images.githubusercontent.com/109169036/179863815-cf8b31b5-2a96-4caa-97b7-230f5212818c.png)
 
-These paths led me to estimate that the optimal alpha hyperparameter for **Ridge regression** would be somewhere between $10^{0}$ and $10^{5}$, that the optimal alpha hyperparameter for **Lasso regression** and **ElasticNet Regression** would be somewhere between $10^{0}$ and $10^{-3}$ and $10^{1}$
+These paths led me to estimate that the optimal alpha hyperparameter for **Ridge regression** would be somewhere between $10^{0}$ and $10^{5}$, that the optimal alpha hyperparameter for **Lasso regression** and **ElasticNet Regression** would be somewhere between $10^{-3}$ and $10^{1}$
 
-### Function Calls
-Given that the function I coded is not capable of exploring all three regression types at the same time, I had to call the function three times. For Ridge Regression the function call was
+### First Function Calls
+Given that the function I coded is not capable of exploring all three regression types at the same time, I had to call the function three times. 
+
+For Ridge regression the function call was:
 ```Python
 model=Ridge
 k = 10
@@ -100,3 +102,26 @@ a_tests = 2000
 
 R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
 ```
+For Lasso regression the function call was:
+```Python
+model = Lasso
+k = 10
+degrees = 3
+a_start = 0.001
+a_end = 10
+a_tests = 2000
+
+R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
+```
+For ElasticNet regression the function call was:
+```Python
+model = ElasticNet
+k = 10
+degrees = 3
+a_start = 0.001
+a_end = 10
+a_tests = 2000
+
+R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
+```
+### Initial Results and Adjustments
