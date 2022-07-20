@@ -162,11 +162,8 @@ The Second Trial involved calling the same functions as in trial one, but with d
 ## Trial Two Results
 This trial found similar that the optimal $R^{2}$ value could be found at similar alpha values.
 - The optimal $R^{2}$ for Ridge was found at: alpha ≈ 0.4045, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
-![image](https://user-images.githubusercontent.com/109169036/179868064-497a6fc2-649b-4508-9ad7-8003174606f3.png)
 - The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.2345, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
-![image](https://user-images.githubusercontent.com/109169036/180067462-af9160af-ac3f-43e9-818c-74ca487ad304.png)
 - The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.1369, Polynomial Features = 2. The $R^{2}$ was 0.5727
-- ![image](https://user-images.githubusercontent.com/109169036/180067432-1de6bd60-824d-4865-91f6-d119e4c3010d.png)
 
 The following graphs, which plot the average $R^{2}$ value as the alpha value changes, provide graphical evidence these $R^{2}$ values are indeed optimal.
 
