@@ -90,7 +90,7 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
   ### ElasticNet Regression
   ![image](https://user-images.githubusercontent.com/109169036/179870930-4987e5f7-c152-4965-a6b7-2c6a30b33e56.png)
 
-These paths informed the alpha ranges I elected to test in the first trial
+These paths informed the alpha ranges I elected to test in the first trial.
 
 ## First Trial
 Given that the function I coded is not capable of exploring all three regression types at the same time, I had to call the function three times. 
