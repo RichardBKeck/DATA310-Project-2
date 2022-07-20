@@ -164,17 +164,27 @@ This trial found similar that the optimal $R^{2}$ value could be found at simila
 - The optimal $R^{2}$ for Ridge was found at: alpha = 0.4045, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
 ![image](https://user-images.githubusercontent.com/109169036/179868064-497a6fc2-649b-4508-9ad7-8003174606f3.png)
 - The optimal $R^{2}$ for Lasso was found at: alpha = 0.2345, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
-![image](https://user-images.githubusercontent.com/109169036/179868864-b41a814f-c1f8-4e16-b9e7-835877cd3553.png)
-- The optimal $R^{2}$ for ElasticNet was found at: alpha = 0.0394, Polynomial Features = 2. The $R^{2}$ was 0.5797
-- ![image](https://user-images.githubusercontent.com/109169036/179869808-d07bd637-3020-4cdd-9909-936af8a958bc.png)
+![image](https://user-images.githubusercontent.com/109169036/180067462-af9160af-ac3f-43e9-818c-74ca487ad304.png)
+- The optimal $R^{2}$ for ElasticNet was found at: alpha = 0.1369, Polynomial Features = 2. The $R^{2}$ was 0.5727
+- ![image](https://user-images.githubusercontent.com/109169036/180067432-1de6bd60-824d-4865-91f6-d119e4c3010d.png)
 
-Therefore, I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyperparameter of 0.02369
+The following graphs, which plot the average $R^{2}$ value as the alpha value changes, provide graphical evidence these $R^{2}$ values are indeed optimal.
+
+### Ridge (The final alpha value tested was increased to show the downward slope.
+![image](https://user-images.githubusercontent.com/109169036/180071265-d6b136a3-5831-4e30-a64b-fb7cfad20ea6.png)
+
+### Lasso
+![image](https://user-images.githubusercontent.com/109169036/180067900-aae42c94-3d70-41cf-aa67-773bd49d468e.png)
+
+### Elastic Net
+![image](https://user-images.githubusercontent.com/109169036/180067924-4deb0884-b9ba-4616-9625-d8b20953c1f5.png)
+
+Based on the results from Trial Two,, I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyperparameter of 0.2345.
 
 ## Test for Normality
 The last part of this project asked if the residuals of the optimal $R^{2}$ followed a normal distribution. I wrote the following function to check if the residuals followed a normal distribution in three ways. First, through a distributional plot. Second, through a quantile-quantile plot. Third, using the Kolmogorov-Smirnov and the Anderson-Darling Tests.
 
 The function is as follows:
-
 ```Python
 def Optimal_Residuals (model, X, y, a_value, degrees):
   import seaborn as sns
@@ -190,7 +200,7 @@ def Optimal_Residuals (model, X, y, a_value, degrees):
   poly = poly = PolynomialFeatures(degrees)
   pipe = Pipeline([['Scaler',scale],['Poly Feats',poly]])
   
-  test_model = model (alpha = a_value)
+  test_model = model (alpha = a_value, )
 
   poly_X = pipe.fit_transform(X)
   
@@ -232,20 +242,68 @@ def Optimal_Residuals (model, X, y, a_value, degrees):
   ```
 When the function was called using the optimal conditions found in the section "Trial Two Results" it returned the following information:
 ### Distribution Plot
-![image](https://user-images.githubusercontent.com/109169036/179870566-c48c2c5f-e372-4b4d-b6ae-26d89bba579c.png)
+![image](https://user-images.githubusercontent.com/109169036/180069251-5d694a4e-1634-4280-ac1a-de81f080dd5f.png)
 
 ### Quantile-Quantile Plot
-![image](https://user-images.githubusercontent.com/109169036/179870750-abcf05f5-b1c1-4157-95f5-fbc8a32097b6.png)
+![image](https://user-images.githubusercontent.com/109169036/180069286-0d8008b7-4c6e-49fc-ab1f-223740530457.png)
 
 ### Test Results
-Kolmogorov-Smirnov Test Results: KstestResult(statistic=0.059208003492357775, pvalue=0.003293124427805528)
+Kolmogorov-Smirnov Test Results: KstestResult(statistic=0.04924004730839393, pvalue=0.02365837157411001)
 
-Anderson-Darling Test Results: AndersonResult(statistic=5.032918611713285, critical_values=array([0.573, 0.653, 0.784, 0.914, 1.087]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]))
+Anderson-Darling Test Results: AndersonResult(statistic=3.6735430141793586, critical_values=array([0.573, 0.653, 0.784, 0.914, 1.087]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]))
 
-This suggests that the residuals are not normal.
+This suggests that the residuals are not normally distrubuted.
 
 ## The Support Vector Regression Challenge
 One additional challenge that my professor proposed was to write a function which uses Support Vector Regression to identify the optimal values for the C and epsilon hyperparamaters. For the purposes of this question, it was assumed that the user would input the desired kernal type and a single polynomial degree. This is primarially stipulated the limit the time that the code needs to run. The following code accomplishes the assigned task. 
 ```Python
+def Project2_SVR (X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_start, eps_end, eps_tests, random_state=123):
+  import numpy as np
+  from sklearn.model_selection import KFold
+  from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+  from sklearn.pipeline import Pipeline
+  import matplotlib.pyplot as plt
+  from sklearn.svm import SVR
 
+  scale = StandardScaler()
+
+  R2train_avg = []
+  R2test_avg = []
+  degree_value =[]
+  c_value = []
+  eps_value = []
+
+  kf = KFold(n_splits=k, random_state=123, shuffle=True)
+  
+  poly_feat = d
+  poly = PolynomialFeatures(degree = d)
+  pipe = Pipeline([['Scaler',scale],['Poly Feats',poly]])
+
+  for c in np.linspace(C_start,C_end,C_tests):
+    reg_para = c
+   
+    for e in np.linspace (eps_start, eps_end, eps_tests):
+      test_model = SVR(kernel = kernel_type, degree = poly_feat, C = reg_para, epsilon = e)
+       R2train_raw = []
+       R2test_raw = []
+     
+       for idxtrain, idxtest in kf.split(X):
+          Xtrain = X[idxtrain]
+          Xtest = X[idxtest]
+          ytrain = y[idxtrain]
+          ytest = y[idxtest]
+          Xpolytrain = pipe.fit_transform(Xtrain)
+          Xpolytest = pipe.transform(Xtest)
+
+          #Regression
+          test_model.fit(Xpolytrain,ytrain)
+          R2train_raw.append(test_model.score(Xpolytrain,ytrain))
+          R2test_raw.append(test_model.score(Xpolytest,ytest))
+        R2test_avg.append(np.mean(R2test_raw))
+        R2train_avg.append(np.mean(R2train_raw))
+        degree_value.append(d)
+        c_value.append(c)
+        eps_value.append(e)
+  
+    return R2train_avg, R2test_avg, degree_value, c_value, eps_value
 ```
