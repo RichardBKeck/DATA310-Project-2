@@ -323,26 +323,27 @@ def Project2_SVR (X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_sta
   return R2train_avg, R2test_avg, c_value, eps_value
 ```
 The inputs variables are:
-- X: the X data
-- y
-- k
-- kernal_type
-- degree
-- C_start
-- C_end
-- C_tests
-- eps_start
-- eps_end
-- eps_tests
+- X: the X data (array)
+- y: the y data (array)
+- k: the number of splits in the K-Fold (integer)
+- kernal_type: the desired kernal type for the SVR (‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’)
+- degree: the desired degree of the SVR (integer
+- C_start: the minimum C value to test (float or integer)
+- C_end: the maximum C value to test (float or integer > c_start)
+- C_tests: the number of C values to test (non-negative float or integer)
+- eps_start: the minimum epsilon value to test (float or integer)
+- eps_end: the maximum epsilon value to test (float or integer > eps_start)
+- eps_tests: the number of epsilon values to test (non-negative float or integer)
 - random_state: 
 
-
 The output variables are:
-  - R2_train_avg
-  - R2test_avg
-  - degree_value
-  - c_
-Calling the function with the following code
+  - R2_train_avg: an array made of R2 scores on the training data
+  - R2test_avg: an array made of R2 scores on the testing data
+  - c_value: an array made of the C value to match the output variable R2test_avg
+  - eps_value: an array made of the Epsilon value to match the output variable R2test_avg
+
+Calling the function with the following code:
+
 ```Python
 k = 10
 kernel_type = 'linear'
@@ -365,9 +366,10 @@ print('Optimal C Value:',C_value[idx_max])
 print('Optimal Epsilon Value:',EPS_value[idx_max])
 print('R^2 Value at that Point:',R2test[idx_max])
 ```
+
 This code results in the optimal $R^{2}$ for a Degree 2 Support Vector Regression being found when: C ≈ 1.12 and Epislon ≈ 0.778. The $R^{2}$ is 0.5736.
 
-I ran the same function for a Degree 1 Support Vector Regression with more test values for C and Epsilon.
+I ran the same function for a Degree 1 Support Vector Regression with more test values for C and Epsilon:
 ```Python
 k = 10
 kernel_type = 'linear'
