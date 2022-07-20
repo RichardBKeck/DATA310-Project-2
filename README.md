@@ -69,20 +69,27 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
   
   return R2test_avg, degree_value, a_value
   ```
-  The user of this function determines the following imports:
-  - The desired model
-  - The X data
-  - The y data
-  - The number of splits in the K-Fold
-  - The polynomial degrees to test
-  - The minimum alpha value to test
-  - The maximum alpha value to test
-  - The number of alpha values to test
-  - 
+  The inputs variables are:
+  - model: The desired model (Ridge, Lasso, or ElasticNet)
+  - X: The X data (array)
+  - y: The y data (array)
+  - k: The number of splits in the K-Fold (integer)
+  - degrees: The polynomial degrees to test (integer)
+  - a_start: The minimum alpha value to test (float or integer)
+  - a_end: The maximum alpha value to test (float or integer > a_start)
+  - a_tests: The number of alpha values to test (Non-negative float or integer)
+  - random_state: The random state you want to use (default = 123)
+  
+  The output variables are:
+  - R2test_avg: An array made of R2 scores on the testing data
+  - degree_value: An array made of the degree to match the ouput variable R2test_avg
+  - a_value: An array made of the alpha value to match the output variable R2test_avg
+ 
  For the purposes of this project, the model types, data, number of K-Folds and a range of polynomial degrees to test were given. The alpha values were not.
  
  ## Identifying Optimal Alpha Ranges
- It is worth noting that Lasso, Ridge, and Elastic Net do not necisarially have to use the same alpha values. I used coefficient paths to estimate what a candidate Alpha range would be. This approach produced three coefficient paths.
+ It is worth noting that Lasso, Ridge, and Elastic Net do not necisarially have to use the same alpha values. I used coefficient paths to estimate what a candidate alpha range would be.
+ 
   ### Ridge Regression
   ![image](https://user-images.githubusercontent.com/109169036/179863646-94f1f394-0210-4895-a6f5-f99d2c84b4fd.png)
   ### Lasso Regression
@@ -97,7 +104,7 @@ Given that the function I coded is not capable of exploring all three regression
 
 For Ridge regression the function call was:
 ```Python
-model=Ridge
+model = Ridge
 k = 10
 degrees = 3
 a_start = 10e-5
@@ -152,7 +159,7 @@ It became apparent that al three initial alpha ranges could be improved.
 - The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
 - The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726
 
-These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested. Thereofore a second round of trials with a lower alpha hyperparameter would be necessary. Though both Lasso and ElasticNet yielded usable answeres, the precesiion could be increased.
+These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested. Thereofore a second round of trials with a lower alpha hyperparameter would be necessary. Though both Lasso and ElasticNet yielded usable answeres, the precision could be increased.
 
 ## Second Trial
 The Second Trial involved calling the same functions as in trial one, but with different alpha paramaters. 
@@ -176,7 +183,7 @@ The following graphs, which plot the average $R^{2}$ value as the alpha value ch
 ### Elastic Net
 ![image](https://user-images.githubusercontent.com/109169036/180067924-4deb0884-b9ba-4616-9625-d8b20953c1f5.png)
 
-Based on the results from Trial Two,, I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyperparameter of 0.2345.
+Based on the results from Trial Two, I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyperparameter of 0.2345.
 
 ## Test for Normality
 The last part of this project asked if the residuals of the optimal $R^{2}$ followed a normal distribution. I wrote the following function to check if the residuals followed a normal distribution in three ways. First, through a distributional plot. Second, through a quantile-quantile plot. Third, using the Kolmogorov-Smirnov and the Anderson-Darling Tests.
@@ -237,7 +244,21 @@ def Optimal_Residuals (model, X, y, a_value, degrees):
 
   return DP, QQ, KS_Test, AD_Test
   ```
+The inputs variables are: 
+  - model: The desired model (Ridge, Lasso, or ElasticNet)
+  - X: The X data (array)
+  - y: The y data (array)
+  - a_value: The alpha hyperparameter (float
+  - degrees: The **one** Polynomial Degree to test (integer)
+
+The output values are
+  - DP: A Distribution Plot
+  - QQ: A Quantile-Quantile Plot
+  - KS_Test: The Kolmogorov-Smirnov Test Results
+  - AD_Test: The Anderson-Darling Test Results
+  
 When the function was called using the optimal conditions found in the section "Trial Two Results" it returned the following information:
+
 ### Distribution Plot
 ![image](https://user-images.githubusercontent.com/109169036/180069251-5d694a4e-1634-4280-ac1a-de81f080dd5f.png)
 
@@ -253,6 +274,7 @@ This suggests that the residuals are not normally distrubuted.
 
 ## The Support Vector Regression Challenge
 One additional challenge that my professor proposed was to write a function which uses Support Vector Regression to identify the optimal values for the C and epsilon hyperparamaters. For the purposes of this question, it was assumed that the user would input the desired kernal type and a single polynomial degree. This is primarially stipulated the limit the time that the code needs to run. The following code accomplishes the assigned task. 
+
 ```Python
 def Project2_SVR (X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_start, eps_end, eps_tests, random_state=123):
   import numpy as np
@@ -266,45 +288,60 @@ def Project2_SVR (X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_sta
 
   R2train_avg = []
   R2test_avg = []
-  degree_value =[]
   c_value = []
   eps_value = []
 
   kf = KFold(n_splits=k, random_state=123, shuffle=True)
-  
-  poly_feat = d
-  poly = PolynomialFeatures(degree = d)
+
+  poly = PolynomialFeatures(degree = degree)
   pipe = Pipeline([['Scaler',scale],['Poly Feats',poly]])
 
   for c in np.linspace(C_start,C_end,C_tests):
-    reg_para = c
    
     for e in np.linspace (eps_start, eps_end, eps_tests):
-      test_model = SVR(kernel = kernel_type, degree = poly_feat, C = reg_para, epsilon = e)
-       
-       R2train_raw = []
-       R2test_raw = []
+      test_model = SVR(kernel = kernel_type, degree = degree, C = c, epsilon = e)
+      R2train_raw = []
+      R2test_raw = []
      
-       for idxtrain, idxtest in kf.split(X):
-          Xtrain = X[idxtrain]
-          Xtest = X[idxtest]
-          ytrain = y[idxtrain]
-          ytest = y[idxtest]
-          Xpolytrain = pipe.fit_transform(Xtrain)
-          Xpolytest = pipe.transform(Xtest)
+      for idxtrain, idxtest in kf.split(X):
+        Xtrain = X[idxtrain]
+        Xtest = X[idxtest]
+        ytrain = y[idxtrain]
+        ytest = y[idxtest]
+        Xpolytrain = pipe.fit_transform(Xtrain)
+        Xpolytest = pipe.transform(Xtest)
 
-          #Regression
-          test_model.fit(Xpolytrain,ytrain)
-          R2train_raw.append(test_model.score(Xpolytrain,ytrain))
-          R2test_raw.append(test_model.score(Xpolytest,ytest))
-        R2test_avg.append(np.mean(R2test_raw))
-        R2train_avg.append(np.mean(R2train_raw))
-        degree_value.append(d)
-        c_value.append(c)
-        eps_value.append(e)
+        #Regression
+        test_model.fit(Xpolytrain,ytrain)
+        R2train_raw.append(test_model.score(Xpolytrain,ytrain))
+        R2test_raw.append(test_model.score(Xpolytest,ytest))
+      R2test_avg.append(np.mean(R2test_raw))
+      R2train_avg.append(np.mean(R2train_raw))
+      c_value.append(c)
+      eps_value.append(e)
   
-    return R2train_avg, R2test_avg, degree_value, c_value, eps_value
+  return R2train_avg, R2test_avg, c_value, eps_value
 ```
+The inputs variables are:
+- X: the X data
+- y
+- k
+- kernal_type
+- degree
+- C_start
+- C_end
+- C_tests
+- eps_start
+- eps_end
+- eps_tests
+- random_state: 
+
+
+The output variables are:
+  - R2_train_avg
+  - R2test_avg
+  - degree_value
+  - c_
 Calling the function with the following code
 ```Python
 k = 10
