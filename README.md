@@ -149,8 +149,8 @@ plt.show()
 It became apparent that al three initial alpha ranges could be improved.
 
 - The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
-- The optimal $R^{2}$ for Lasso was found at: alpha = 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
-- The optimal $R^{2}$ for ElasticNet was found at: alpha = 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726
+- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
+- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726
 
 These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested. Thereofore a second round of trials with a lower alpha hyperparameter would be necessary. Though both Lasso and ElasticNet yielded usable answeres, the precesiion could be increased.
 
@@ -161,11 +161,11 @@ The Second Trial involved calling the same functions as in trial one, but with d
 
 ## Trial Two Results
 This trial found similar that the optimal $R^{2}$ value could be found at similar alpha values.
-- The optimal $R^{2}$ for Ridge was found at: alpha = 0.4045, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
+- The optimal $R^{2}$ for Ridge was found at: alpha ≈ 0.4045, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
 ![image](https://user-images.githubusercontent.com/109169036/179868064-497a6fc2-649b-4508-9ad7-8003174606f3.png)
-- The optimal $R^{2}$ for Lasso was found at: alpha = 0.2345, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
+- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.2345, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
 ![image](https://user-images.githubusercontent.com/109169036/180067462-af9160af-ac3f-43e9-818c-74ca487ad304.png)
-- The optimal $R^{2}$ for ElasticNet was found at: alpha = 0.1369, Polynomial Features = 2. The $R^{2}$ was 0.5727
+- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.1369, Polynomial Features = 2. The $R^{2}$ was 0.5727
 - ![image](https://user-images.githubusercontent.com/109169036/180067432-1de6bd60-824d-4865-91f6-d119e4c3010d.png)
 
 The following graphs, which plot the average $R^{2}$ value as the alpha value changes, provide graphical evidence these $R^{2}$ values are indeed optimal.
@@ -307,3 +307,27 @@ def Project2_SVR (X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_sta
   
     return R2train_avg, R2test_avg, degree_value, c_value, eps_value
 ```
+Calling the function with the following code
+```Python
+k = 10
+kernel_type = 'linear'
+degree = 1
+
+C_start = 0.001
+C_end = 10
+C_tests = 50
+
+eps_start = 0.001
+eps_end = 10
+eps_tests = 50
+
+R2train, R2test, degree_value, C_value, EPS_value = Project2_SVR(X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_start,eps_end, eps_tests)
+
+# SVR
+idx_max = np.argmax(R2test)
+print('Optimal Polynomal Degree:',degree_value[idx_max])
+print('Optimal C Value:',C_value[idx_max])
+print('Optimal Epsilon Value:',EPS_value[idx_max])
+print('R^2 Value at that Point:',R2test[idx_max])
+```
+This code results in the optimal $R^{2}$ for a Degree 1 Support Vector Regression being found when: C ≈ 0.6131 and Epislon ≈. The $R^{2}$ is 0.5727 
