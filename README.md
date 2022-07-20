@@ -156,8 +156,8 @@ These initial results suggested that the initial $R^{2}$ for Ridge was below $10
 
 ## Second Trial
 The Second Trial involved calling the same functions as in trial one, but with different alpha paramaters. 
-- For Ridge, the starting alpha was decreased to ($10^{-7}$) while the ending alpha became 1. 
-- For Lasso and Elastic Net, the starting alpha was kept at at ($10^{-5}$) and the ending alpha became 0.1 ($10^{-1}$).
+- For Ridge, the starting alpha was decreased to $10^{-7}$ while the ending alpha became 1. 
+- For Lasso and Elastic Net, the starting alpha was kept at at $10^{-5} and the ending alpha became 0.1 ($10^{-1}$).
 
 ## Trial Two Results
 This trial found similar that the optimal $R^{2}$ value could be found at similar alpha values.
