@@ -155,9 +155,9 @@ plt.show()
 ```
 It became apparent that al three initial alpha ranges could be improved.
 
-- The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
-- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
-- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726
+**- The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
+**- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786**
+**- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726****
 
 These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested. Thereofore a second round of trials with a lower alpha hyperparameter would be necessary. Though both Lasso and ElasticNet yielded usable answeres, the precision could be increased.
 
@@ -168,13 +168,13 @@ The Second Trial involved calling the same functions as in trial one, but with d
 
 ## Trial Two Results
 This trial found similar that the optimal $R^{2}$ value could be found at similar alpha values.
-- The optimal $R^{2}$ for Ridge was found at: alpha ≈ 0.4045, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
-- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.2345, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
-- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.1369, Polynomial Features = 2. The $R^{2}$ was 0.5727
+**- The optimal $R^{2}$ for Ridge was found at: alpha ≈ 0.4045, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667**
+**- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.2345, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786**
+**- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.1369, Polynomial Features = 2. The $R^{2}$ was 0.5727**
 
 The following graphs, which plot the average $R^{2}$ value as the alpha value changes, provide graphical evidence these $R^{2}$ values are indeed optimal.
 
-### Ridge (The final alpha value tested was increased to show the downward slope.
+### Ridge (The final alpha value tested was increased to show the downward slope).
 ![image](https://user-images.githubusercontent.com/109169036/180071265-d6b136a3-5831-4e30-a64b-fb7cfad20ea6.png)
 
 ### Lasso
@@ -183,7 +183,7 @@ The following graphs, which plot the average $R^{2}$ value as the alpha value ch
 ### Elastic Net
 ![image](https://user-images.githubusercontent.com/109169036/180067924-4deb0884-b9ba-4616-9625-d8b20953c1f5.png)
 
-Based on the results from Trial Two, I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyperparameter of 0.2345.
+Based on the results from Trial Two, **I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyper parameter of 0.2345.**
 
 ## Test for Normality
 The last part of this project asked if the residuals of the optimal $R^{2}$ followed a normal distribution. I wrote the following function to check if the residuals followed a normal distribution in three ways. First, through a distributional plot. Second, through a quantile-quantile plot. Third, using the Kolmogorov-Smirnov and the Anderson-Darling Tests.
