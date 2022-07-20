@@ -331,6 +331,8 @@ print('Optimal C Value:',C_value[idx_max])
 print('Optimal Epsilon Value:',EPS_value[idx_max])
 print('R^2 Value at that Point:',R2test[idx_max])
 ```
-This code results in the optimal $R^{2}$ for a Degree 1 Support Vector Regression being found when: C ≈ 0.6131 and Epislon ≈. The $R^{2}$ is 0.5727 
+This code results in the optimal $R^{2}$ for a Degree 2 Support Vector Regression being found when: C ≈ 1.12 and Epislon ≈0.778. The $R^{2}$ is 0.5736.
+
+Similar code
 
 Unfortunately, this function is incredibly slow and therefore it's application is limited without the use of more effecient methods of optimization (ie. grid search).
