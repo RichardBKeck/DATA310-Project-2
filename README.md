@@ -2,7 +2,7 @@
 
 This project was compleated as a part of DATA 310 at William & Mary. The project consisted of one programming assignments. In addition to the README file, this repository contains a folder which has the .ipynb files for all questions.
 
-### Question One
+## Question One
 
 Question One Asks the following:
 
@@ -80,7 +80,7 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
   - The number of alpha values to test
  For the purposes of this project, the model types, data, K-Fold splits and polynomial degrees to test were given. The alpha values were not.
  
- ### Identifying Optimal Alpha Ranges
+ ## Identifying Optimal Alpha Ranges
  It is worth noting that Lasso, Ridge, and Elastic Net do not necisarially have to use the same alpha values. I used coefficient paths to estimate what a candidate Alpha range would be. This approach produced three coefficient paths.
   ![image](https://user-images.githubusercontent.com/109169036/179863646-94f1f394-0210-4895-a6f5-f99d2c84b4fd.png)
   ![image](https://user-images.githubusercontent.com/109169036/179863658-a755c265-5330-4fc9-8ad3-2ff2c09ade09.png)
@@ -88,7 +88,7 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
 
 These paths led me to estimate that the optimal alpha hyperparameter for **Ridge regression** would be somewhere between $10^{0}$ and $10^{5}$, that the optimal alpha hyperparameter for **Lasso regression** and **ElasticNet Regression** would be somewhere between $10^{-3}$ and $10^{1}$
 
-### First Function Calls
+## First Trial
 Given that the function I coded is not capable of exploring all three regression types at the same time, I had to call the function three times. 
 
 For Ridge regression the function call was:
@@ -124,4 +124,114 @@ a_tests = 2000
 
 R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
 ```
-### Initial Results and Adjustments
+## Trial One Results and Adjustments
+After the function was ran for the three models, a function was printed for each one comparing the $R^{2}$ values to the alpha hyperparameter. The code also found the maximum $R^{2}$ score and the corresponding alpha value and the number of polynomial features. The code is:
+
+```Python
+idx_max = np.argmax(R2test)
+print('Optimal Polynomal Degree:',degree_value[idx_max])
+print('Optimal Alpha Value:',a_value[idx_max])
+print('R^2 Value at that Point:',R2test[idx_max])
+
+plt.figure(figsize=(8,4))
+for d in range (1,degrees+1,1):
+  plt.scatter(a_value[(d-1)*a_tests:d*a_tests],R2test[(d-1)*a_tests:d*a_tests],alpha = 0.5,label= 'Degree '+str(d)+' Polynomial', cmap = 'jet')
+plt.xlabel('$\\alpha$')
+plt.ylabel('Avg. $R^2$')
+plt.title(model())
+plt.legend()
+plt.show()
+```
+It became apparent that al three initial alpha ranges could be improved.
+- The optimal $R^{2}$ for Ridge was found at: alpha = 51.025
+- The optimal $R^{2}$ for Lasso was found at: alpha = 0.041
+- The optimal $R^{2}$ for Elastic Net was found at: alpha = 0.026
+
+## Second Trial
+The Second Trial involved calling the same functions as in trial one, but with different alpha paramaters. 
+- For Ridge, the starting alpha was kept at 1 while the ending alpha became 100. 
+- For Lasso and Elastic Net, the starting alpha was shrunk at 0.0001, and the ending alpha became 0.10.
+
+## Trial Two Results
+This trial found similar that the optimal $R^{2}$ value could be found at similar alpha values.
+- The optimal $R^{2}$ for Ridge was found at: alpha = 51.025, Polynomial Features = 2. The $R^{2}$ was 0.5702
+![image](https://user-images.githubusercontent.com/109169036/179868064-497a6fc2-649b-4508-9ad7-8003174606f3.png)
+- The optimal $R^{2}$ for Lasso was found at: alpha = 0.02369, Polynomial Features = 2. The $R^{2}$ was 0.5804
+![image](https://user-images.githubusercontent.com/109169036/179868864-b41a814f-c1f8-4e16-b9e7-835877cd3553.png)
+- The optimal $R^{2}$ for ElasticNet was found at: alpha = 0.0394, Polynomial Features = 2. The $R^{2}$ was 0.5797
+- ![image](https://user-images.githubusercontent.com/109169036/179869808-d07bd637-3020-4cdd-9909-936af8a958bc.png)
+
+Therefore, I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyperparameter of 0.02369
+
+## Test for Normality
+The last part of this project asked if the residuals of the optimal $R^{2}$ followed a normal distribution. I wrote the following function to check if the residuals followed a normal distribution in three ways. First, through a distributional plot. Second, through a quantile-quantile plot. Third, using the Kolmogorov-Smirnov and the Anderson-Darling Tests.
+
+The function is as follows:
+
+```Python
+def Optimal_Residuals (model, X, y, a_value, degrees):
+  import seaborn as sns
+  from scipy import stats
+  from scipy.stats import norm
+  from sklearn.linear_model import Ridge
+  from sklearn.linear_model import Lasso
+  from sklearn.linear_model import ElasticNet
+  from sklearn.pipeline import Pipeline
+
+  scale = StandardScaler()
+  
+  poly = poly = PolynomialFeatures(degrees)
+  pipe = Pipeline([['Scaler',scale],['Poly Feats',poly]])
+  
+  test_model = model (alpha = a_value)
+
+  poly_X = pipe.fit_transform(X)
+  
+  test_model.fit(poly_X,y)
+
+  residuals = y - test_model.predict(poly_X)
+
+  # Distributional Plot
+  DP=plt.figure
+  ax1 = sns.distplot(residuals,
+                    kde=False,
+                    color='deepskyblue',
+                    hist_kws={"color":'green','ec':'black'},
+                    fit=stats.norm,
+                    fit_kws={"color":'red'})
+  ax1.set(xlabel='Residuals', ylabel='Frequency')
+
+  # Quantile-Quantile Plot
+  import statsmodels.api as sm
+  QQ=plt.figure
+  sm.qqplot(residuals/np.std(residuals), loc = 0, scale = 1, line='s',alpha=0.5)
+  plt.xlim([-2.5,2.5])
+  plt.ylim([-2.5,2.5])
+  plt.axes().set_aspect('equal')
+  plt.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.5)
+  plt.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.15)
+  plt.minorticks_on()
+
+  # KS and Anderson Test
+  dist = getattr(stats, 'norm')
+  params = dist.fit(residuals)
+  stats.kstest(residuals,'norm',params)
+  stats.anderson(residuals,'norm')
+
+  KS_Test = stats.kstest(residuals,'norm',params)
+  AD_Test = stats.anderson(residuals,'norm')
+
+  return DP, QQ, KS_Test, AD_Test
+  ```
+When the function was called using the optimal conditions found in the section "Trial Two Results" it returned the following information:
+### Distribution Plot
+![image](https://user-images.githubusercontent.com/109169036/179870566-c48c2c5f-e372-4b4d-b6ae-26d89bba579c.png)
+
+### Quantile-Quantile Plot
+![image](https://user-images.githubusercontent.com/109169036/179870750-abcf05f5-b1c1-4157-95f5-fbc8a32097b6.png)
+
+### Test Results
+Kolmogorov-Smirnov Test Results: KstestResult(statistic=0.059208003492357775, pvalue=0.003293124427805528)
+Anderson-Darling Test Results: AndersonResult(statistic=5.032918611713285, critical_values=array([0.573, 0.653, 0.784, 0.914, 1.087]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]))
+
+## The Support Vector Regression Challenge
