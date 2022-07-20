@@ -19,7 +19,7 @@ y = dataframe.iloc[:,-1].values
 ```
 It is worth noting that the data set itself features unnamed columns, however the columns are identified on the Machine Learning Repository's website. Columns 1-6 represent the features, while Column 7 is the target.
 
-The next step I took was to write a function that could be used to test and identify any combination of polynomial features,linear models, and alpha parameters. I did so using a series of "for loops and an internal K-Fold cross validation. The code that I produced is below.
+The next step I took was to write a function that could be used to test and identify any combination of polynomial features,linear models, and alpha parameters. I did so using a series of "for loops" and an internal K-Fold cross validation. The code that I produced is below.
 
 ```Python
 def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123):
