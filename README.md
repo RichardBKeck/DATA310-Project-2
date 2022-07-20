@@ -11,6 +11,7 @@ Question One Asks the following:
 After you obtained the best choice of polynomial degree and hyperparameter alpha compute the residuals of the best model on the whole data and determine whether they follow a normal distribution."
 
 This project began by importing the QSAR Fish Toxicity research from the University of California - Irvines Machine Learning Repository. Since I used Google Colab for this assignment I imported the data using the following code.
+
 ```Python
 dataframe = pd.read_csv('drive/MyDrive/DATA 310/Project 2/qsar_fish_toxicity.csv', delimiter = ';' ,names = ['CIC0','SM1_Dz(Z)','GATS1i','NdsCH','NdssC','MLOGP','LC50 [-LOG(mol/L)]'])
 X = dataframe.iloc[:,:-1].values
@@ -147,20 +148,20 @@ plt.show()
 ```
 It became apparent that al three initial alpha ranges could be improved.
 
-- The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5686
-- The optimal $R^{2}$ for Lasso was found at: alpha = 0.025, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5804
-- The optimal $R^{2}$ for Elastic Net was found at: alpha = 0.040, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5797
+- The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
+- The optimal $R^{2}$ for Lasso was found at: alpha = 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786
+- The optimal $R^{2}$ for ElasticNet was found at: alpha = 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726
 
-These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested.
+These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested. Thereofore a second round of trials with a lower alpha hyperparameter would be necessary. Though both Lasso and ElasticNet yielded usable answeres, the precesiion could be increased.
 
 ## Second Trial
 The Second Trial involved calling the same functions as in trial one, but with different alpha paramaters. 
-- For Ridge, the starting alpha was kept at 1 while the ending alpha became 100. 
-- For Lasso and Elastic Net, the starting alpha was shrunk at 0.0001, and the ending alpha became 0.10.
+- For Ridge, the starting alpha was decreased to ($10^{-7}$) while the ending alpha became 1. 
+- For Lasso and Elastic Net, the starting alpha was kept at at ($10^{-5}$) and the ending alpha became 0.1 ($10^{-1}$).
 
 ## Trial Two Results
 This trial found similar that the optimal $R^{2}$ value could be found at similar alpha values.
-- The optimal $R^{2}$ for Ridge was found at: alpha = 51.025, Polynomial Features = 2. The $R^{2}$ was 0.5702
+- The optimal $R^{2}$ for Ridge was found at: alpha = 0.40450, Polynomial Features = 2. The $R^{2}$ was 0.5667
 ![image](https://user-images.githubusercontent.com/109169036/179868064-497a6fc2-649b-4508-9ad7-8003174606f3.png)
 - The optimal $R^{2}$ for Lasso was found at: alpha = 0.02369, Polynomial Features = 2. The $R^{2}$ was 0.5804
 ![image](https://user-images.githubusercontent.com/109169036/179868864-b41a814f-c1f8-4e16-b9e7-835877cd3553.png)
