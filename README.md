@@ -44,7 +44,7 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
     pipe = Pipeline([['Scaler',scale],['Poly Feats',poly]])
 
     for a in np.linspace(a_start,a_end,a_tests):
-      test_model = model(alpha= a, max_iter=5000)
+      test_model = model(alpha= a, fit_intercept = False, max_iter=5000)
 
       R2train_raw = []
       R2test_raw = []
@@ -66,9 +66,8 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
       degree_value.append(d)
       a_value.append(a)
   
-  return R2 train_avg, R2test_avg, degree_value, a_value
+  return R2test_avg, degree_value, a_value
   ```
-  
   The user of this function determines the following imports:
   - The desired model
   - The X data
@@ -78,15 +77,19 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
   - The minimum alpha value to test
   - The maximum alpha value to test
   - The number of alpha values to test
- For the purposes of this project, the model types, data, K-Fold splits and polynomial degrees to test were given. The alpha values were not.
+  - 
+ For the purposes of this project, the model types, data, number of K-Folds and a range of polynomial degrees to test were given. The alpha values were not.
  
  ## Identifying Optimal Alpha Ranges
  It is worth noting that Lasso, Ridge, and Elastic Net do not necisarially have to use the same alpha values. I used coefficient paths to estimate what a candidate Alpha range would be. This approach produced three coefficient paths.
+  ### Ridge Regression
   ![image](https://user-images.githubusercontent.com/109169036/179863646-94f1f394-0210-4895-a6f5-f99d2c84b4fd.png)
+  ### Lasso Regression
   ![image](https://user-images.githubusercontent.com/109169036/179863658-a755c265-5330-4fc9-8ad3-2ff2c09ade09.png)
+  ### ElasticNet Regression
   ![image](https://user-images.githubusercontent.com/109169036/179870930-4987e5f7-c152-4965-a6b7-2c6a30b33e56.png)
 
-These paths led me to estimate that the optimal alpha hyperparameter for **Ridge regression** would be somewhere between $10^{0}$ and $10^{5}$, that the optimal alpha hyperparameter for **Lasso regression** and **ElasticNet Regression** would be somewhere between $10^{-3}$ and $10^{1}$
+These paths informed the alpha ranges I elected to test in the first trial
 
 ## First Trial
 Given that the function I coded is not capable of exploring all three regression types at the same time, I had to call the function three times. 
@@ -96,9 +99,9 @@ For Ridge regression the function call was:
 model=Ridge
 k = 10
 degrees = 3
-a_start = 0.00001
-a_end = 10000
-a_tests = 2000
+a_start = 10e-5
+a_end = 10e-5
+a_tests = 2500
 
 R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
 ```
@@ -107,9 +110,9 @@ For Lasso regression the function call was:
 model = Lasso
 k = 10
 degrees = 3
-a_start = 0.00001
-a_end = 10
-a_tests = 2000
+a_start = 10e-5
+a_end = 10e1
+a_tests = 2500
 
 R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
 ```
@@ -118,9 +121,9 @@ For ElasticNet regression the function call was:
 model = ElasticNet
 k = 10
 degrees = 3
-a_start = 0.00001
-a_end = 10
-a_tests = 2000
+a_start = 10e-5
+a_end = 10e1
+a_tests = 2500
 
 R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
 ```
@@ -144,9 +147,11 @@ plt.show()
 ```
 It became apparent that al three initial alpha ranges could be improved.
 
-- The optimal $R^{2}$ for Ridge was found at: alpha = 50.025, Polynomial Features = 2. The $R^{2}$ was 0.5702
-- The optimal $R^{2}$ for Lasso was found at: alpha = 0.025, Polynomial Features = 2. The $R^{2}$ was 0.5804
-- The optimal $R^{2}$ for Elastic Net was found at: alpha = 0.040, Polynomial Features = 2. The $R^{2}$ was 0.5797
+- The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5686
+- The optimal $R^{2}$ for Lasso was found at: alpha = 0.025, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5804
+- The optimal $R^{2}$ for Elastic Net was found at: alpha = 0.040, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5797
+
+These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested.
 
 ## Second Trial
 The Second Trial involved calling the same functions as in trial one, but with different alpha paramaters. 
