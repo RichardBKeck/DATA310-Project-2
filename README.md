@@ -101,7 +101,7 @@ model=Ridge
 k = 10
 degrees = 3
 a_start = 10e-5
-a_end = 10e-5
+a_end = 10e5
 a_tests = 2500
 
 R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
