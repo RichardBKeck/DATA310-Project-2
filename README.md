@@ -353,6 +353,6 @@ print('Optimal C Value:',C_value[idx_max])
 print('Optimal Epsilon Value:',EPS_value[idx_max])
 print('R^2 Value at that Point:',R2test[idx_max])
 ```
-This test yielded an $R^{2}$ value of 0.5741 at C ≈ 0.4263 and epsilon ≈ 0.9584
+This test yielded an $R^{2}$ value of 0.5741 at C ≈ 0.4263 and epsilon ≈ 0.9584.
 
 Unfortunately, this function is incredibly slow and therefore it's application is limited without the use of more effecient methods of optimization (ie. grid search).
