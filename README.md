@@ -331,8 +331,31 @@ print('Optimal C Value:',C_value[idx_max])
 print('Optimal Epsilon Value:',EPS_value[idx_max])
 print('R^2 Value at that Point:',R2test[idx_max])
 ```
-This code results in the optimal $R^{2}$ for a Degree 2 Support Vector Regression being found when: C ≈ 1.12 and Epislon ≈0.778. The $R^{2}$ is 0.5736.
+This code results in the optimal $R^{2}$ for a Degree 2 Support Vector Regression being found when: C ≈ 1.12 and Epislon ≈ 0.778. The $R^{2}$ is 0.5736.
 
-Similar code
+I ran the same function for a Degree 1 Support Vector Regression with more test values for C and Epsilon.
+```Python
+k = 10
+kernel_type = 'linear'
+degree = 2
+
+C_start = 0.01
+C_end = 10
+C_tests = 25
+
+eps_start = 0.001
+eps_end = 1
+eps_tests = 25
+
+R2train, R2test, C_value, EPS_value = Project2_SVR(X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_start,eps_end, eps_tests)
+
+# SVR
+idx_max = np.argmax(R2test)
+print('Optimal Polynomal Degree:',degree_value[idx_max])
+print('Optimal C Value:',C_value[idx_max])
+print('Optimal Epsilon Value:',EPS_value[idx_max])
+print('R^2 Value at that Point:',R2test[idx_max])
+```
+This test yielded an $R^{2}$ value of 0.5741 at C ≈ 0.4263 and epsilon ≈ 0.9584
 
 Unfortunately, this function is incredibly slow and therefore it's application is limited without the use of more effecient methods of optimization (ie. grid search).
