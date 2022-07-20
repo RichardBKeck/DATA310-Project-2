@@ -84,7 +84,7 @@ def Project2 (model, X, y, k, degrees, a_start, a_end, a_tests, random_state=123
  It is worth noting that Lasso, Ridge, and Elastic Net do not necisarially have to use the same alpha values. I used coefficient paths to estimate what a candidate Alpha range would be. This approach produced three coefficient paths.
   ![image](https://user-images.githubusercontent.com/109169036/179863646-94f1f394-0210-4895-a6f5-f99d2c84b4fd.png)
   ![image](https://user-images.githubusercontent.com/109169036/179863658-a755c265-5330-4fc9-8ad3-2ff2c09ade09.png)
-  ![image](https://user-images.githubusercontent.com/109169036/179863815-cf8b31b5-2a96-4caa-97b7-230f5212818c.png)
+  ![image](https://user-images.githubusercontent.com/109169036/179870930-4987e5f7-c152-4965-a6b7-2c6a30b33e56.png)
 
 These paths led me to estimate that the optimal alpha hyperparameter for **Ridge regression** would be somewhere between $10^{0}$ and $10^{5}$, that the optimal alpha hyperparameter for **Lasso regression** and **ElasticNet Regression** would be somewhere between $10^{-3}$ and $10^{1}$
 
