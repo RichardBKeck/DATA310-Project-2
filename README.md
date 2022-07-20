@@ -284,6 +284,7 @@ def Project2_SVR (X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_sta
    
     for e in np.linspace (eps_start, eps_end, eps_tests):
       test_model = SVR(kernel = kernel_type, degree = poly_feat, C = reg_para, epsilon = e)
+       
        R2train_raw = []
        R2test_raw = []
      
@@ -315,11 +316,11 @@ degree = 1
 
 C_start = 0.001
 C_end = 10
-C_tests = 50
+C_tests = 10
 
 eps_start = 0.001
 eps_end = 10
-eps_tests = 50
+eps_tests = 10
 
 R2train, R2test, degree_value, C_value, EPS_value = Project2_SVR(X, y, k, kernel_type, degree, C_start, C_end, C_tests, eps_start,eps_end, eps_tests)
 
@@ -331,3 +332,5 @@ print('Optimal Epsilon Value:',EPS_value[idx_max])
 print('R^2 Value at that Point:',R2test[idx_max])
 ```
 This code results in the optimal $R^{2}$ for a Degree 1 Support Vector Regression being found when: C ≈ 0.6131 and Epislon ≈. The $R^{2}$ is 0.5727 
+
+Unfortunately, this function is incredibly slow and therefore it's application is limited without the use of more effecient methods of optimization (ie. grid search).
