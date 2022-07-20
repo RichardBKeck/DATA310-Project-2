@@ -96,8 +96,8 @@ For Ridge regression the function call was:
 model=Ridge
 k = 10
 degrees = 3
-a_start = 1
-a_end = 100,000
+a_start = 0.00001
+a_end = 10000
 a_tests = 2000
 
 R2test, degree_value, a_value = Project2(model,X,y,k,degrees,a_start,a_end,a_tests)
@@ -107,7 +107,7 @@ For Lasso regression the function call was:
 model = Lasso
 k = 10
 degrees = 3
-a_start = 0.001
+a_start = 0.00001
 a_end = 10
 a_tests = 2000
 
@@ -118,7 +118,7 @@ For ElasticNet regression the function call was:
 model = ElasticNet
 k = 10
 degrees = 3
-a_start = 0.001
+a_start = 0.00001
 a_end = 10
 a_tests = 2000
 
@@ -143,9 +143,10 @@ plt.legend()
 plt.show()
 ```
 It became apparent that al three initial alpha ranges could be improved.
-- The optimal $R^{2}$ for Ridge was found at: alpha = 51.025
-- The optimal $R^{2}$ for Lasso was found at: alpha = 0.041
-- The optimal $R^{2}$ for Elastic Net was found at: alpha = 0.026
+
+- The optimal $R^{2}$ for Ridge was found at: alpha = 50.025, Polynomial Features = 2. The $R^{2}$ was 0.5702
+- The optimal $R^{2}$ for Lasso was found at: alpha = 0.025, Polynomial Features = 2. The $R^{2}$ was 0.5804
+- The optimal $R^{2}$ for Elastic Net was found at: alpha = 0.040, Polynomial Features = 2. The $R^{2}$ was 0.5797
 
 ## Second Trial
 The Second Trial involved calling the same functions as in trial one, but with different alpha paramaters. 
