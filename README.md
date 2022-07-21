@@ -188,7 +188,7 @@ The following graphs, which plot the average $R^{2}$ value as the alpha value ch
 ### Elastic Net
 ![image](https://user-images.githubusercontent.com/109169036/180067924-4deb0884-b9ba-4616-9625-d8b20953c1f5.png)
 
-Based on the results from Trial Two, **I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyper parameter of 0.2345.**
+Based on the results from Trial Two, **I found that the optimal $R^{2}$ occured using the Lasso model, with a 2nd degree Polynomial and an alpha hyperparameter of 0.2345.**
 
 ## Test for Normality
 The last part of this project asked if the residuals of the optimal $R^{2}$ followed a normal distribution. I wrote the following function to check if the residuals followed a normal distribution in three ways. First, through a distributional plot. Second, through a quantile-quantile plot. Third, using the Kolmogorov-Smirnov and the Anderson-Darling Tests.
@@ -332,14 +332,14 @@ The inputs variables are:
 - y: the y data (array)
 - k: the number of splits in the K-Fold (integer)
 - kernal_type: the desired kernal type for the SVR (‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’)
-- degree: the desired degree of the SVR (integer
+- degree: the desired degree of the SVR (integer)
 - C_start: the minimum C value to test (float or integer)
 - C_end: the maximum C value to test (float or integer > c_start)
 - C_tests: the number of C values to test (non-negative float or integer)
 - eps_start: the minimum epsilon value to test (float or integer)
 - eps_end: the maximum epsilon value to test (float or integer > eps_start)
 - eps_tests: the number of epsilon values to test (non-negative float or integer)
-- random_state: 
+- random_state: default = 123
 
 The output variables are:
   - R2_train_avg: an array made of R2 scores on the training data
