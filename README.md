@@ -270,7 +270,7 @@ Kolmogorov-Smirnov Test Results: KstestResult(statistic=0.04924004730839393, pva
 
 Anderson-Darling Test Results: AndersonResult(statistic=3.6735430141793586, critical_values=array([0.573, 0.653, 0.784, 0.914, 1.087]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]))
 
-This suggests that the residuals are not normally distrubuted.
+Given the low p-value from the Kolmogorov-Smirnov test and the fact that the returned statistic in Anderson-Darling is gerater than the crirical values, the null hypothesis can be rejected, meaning that the residuals are not normally distrubuted.
 
 ## The Support Vector Regression Challenge
 One additional challenge that my professor proposed was to write a function which uses Support Vector Regression to identify the optimal values for the C and epsilon hyperparamaters. For the purposes of this question, it was assumed that the user would input the desired kernal type and a single polynomial degree. This is primarially stipulated the limit the time that the code needs to run. The following code accomplishes the assigned task. 
