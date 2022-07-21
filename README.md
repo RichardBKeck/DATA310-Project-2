@@ -155,7 +155,7 @@ plt.show()
 ```
 It became apparent that all three initial alpha ranges could be improved.
 
-**- The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667
+**- The optimal $R^{2}$ for Ridge was found at: alpha = 0.0001 ($10^{-5}$), Polynomial Features = 2. The $R^{2}$ was ≈ 0.5667**
 
 **- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786**
 
