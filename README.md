@@ -159,7 +159,7 @@ It became apparent that all three initial alpha ranges could be improved.
 
 **- The optimal $R^{2}$ for Lasso was found at: alpha ≈ 0.0240, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5786**
 
-**- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726***
+**- The optimal $R^{2}$ for ElasticNet was found at: alpha ≈ 0.012, Polynomial Features = 2. The $R^{2}$ was ≈ 0.5726**
 
 These initial results suggested that the initial $R^{2}$ for Ridge was below $10^{-5}$, as $10^{-5}$ was the minimum value of alpha tested. Thereofore a second round of trials with a lower alpha hyperparameter would be necessary. Though both Lasso and ElasticNet yielded usable answeres, the precision could be increased.
 
